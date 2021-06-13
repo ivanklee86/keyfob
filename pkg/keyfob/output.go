@@ -22,7 +22,7 @@ func printToStream(stream io.Writer, msg interface{}) {
 
 // printToStreamWithColor prints a message after wrapping it in ANSI color codes.
 func printToStreamWithColor(stream io.Writer, color text.Color, msg interface{}) {
-	_, err := fmt.Fprintf(stream, color.Sprint("%v\n", msg))
+	_, err := fmt.Fprintf(stream, color.Sprintf("%v\n", msg))
 	if err != nil {
 		panic(err)
 	}
