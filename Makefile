@@ -2,6 +2,10 @@ BINARY = keyfob
 BUILD_DIR = bin
 TEST_REPORT = tests.xml
 
+VERSION = "Make"
+
+LDFLAGS = -ldflags "-X main.version=${VERSION}"
+
 .PHONY: test fmt
 
 #-----------------------------------------------------------------------
@@ -15,7 +19,7 @@ all: clean fmt lint test build
 #-----------------------------------------------------------------------
 build:
 	mkdir ${BUILD_DIR} | true
-	go build -o ${BUILD_DIR} ./...
+	go build ${LDFLAGS} -o ${BUILD_DIR} ./...
 
 #-----------------------------------------------------------------------
 # Testing & Linting
