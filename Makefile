@@ -1,6 +1,8 @@
 BINARY = keyfob
 BUILD_DIR = bin
 TEST_REPORT = tests.xml
+COVERAGE_RAW = cover.out
+COVERAGE_REPORT = cover.html
 
 VERSION = "Make"
 
@@ -32,7 +34,8 @@ lint:
 	golangci-lint run
 
 test:
-	go test -v ./... 2>&1 | go2xunit -output ${TEST_REPORT}
+	go test --coverprofile ${COVERAGE_RAW} -v ./... 2>&1 | go2xunit -output ${TEST_REPORT}
+	go tool cover -html=${COVERAGE_RAW} -o ${COVERAGE_REPORT}
 
 #-----------------------------------------------------------------------
 # Utilities
@@ -40,3 +43,5 @@ test:
 clean:
 	rm -f ${TEST_REPORT}
 	rm -rf ${BUILD_DIR}
+	rm -f ${COVERAGE_RAW}
+	rm -f ${COVERAGE_REPORT}

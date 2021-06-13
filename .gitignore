@@ -19,3 +19,4 @@ bin/
 .vscode
 .idea
 tests.xml
+cover.html
