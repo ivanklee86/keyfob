@@ -41,5 +41,7 @@ func NewRootCommand() *cobra.Command {
 		},
 	}
 
+	cmd.PersistentFlags().BoolVar(&keyfob.NoExitCode, "no-exit-on-fail", false, "Don't return a non-zero exit code on failure.")
+
 	return cmd	
 }

@@ -5,7 +5,9 @@ import (
 	"os"
 )
 
-type Config struct {}
+type Config struct {
+	NoExitCode bool
+}
 
 // Keyfob is the logic/orchestrator.
 type Keyfob struct {
