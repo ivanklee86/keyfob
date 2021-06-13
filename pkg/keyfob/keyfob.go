@@ -24,7 +24,7 @@ func New() *Keyfob {
 
 	return &Keyfob{
 		Config: &config,
-		Out: os.Stdout,
-		Err: os.Stdin,	
+		Out:    os.Stdout,
+		Err:    os.Stdin,
 	}
 }

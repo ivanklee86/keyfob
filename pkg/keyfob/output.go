@@ -14,7 +14,7 @@ const (
 
 // printToStream prints a generic message to a stream (stdout/stderror) in color.
 func printToStream(stream io.Writer, msg interface{}) {
-	_, err := fmt.Fprint(stream, fmt.Sprintf("%v\n", msg))
+	_, err := fmt.Fprintf(stream, "%v\n", msg)
 	if err != nil {
 		panic(err)
 	}
@@ -22,7 +22,7 @@ func printToStream(stream io.Writer, msg interface{}) {
 
 // printToStreamWithColor prints a message after wrapping it in ANSI color codes.
 func printToStreamWithColor(stream io.Writer, color text.Color, msg interface{}) {
-	_, err := fmt.Fprintf(stream, color.Sprintf("%v\n", msg))
+	_, err := fmt.Fprint(stream, color.Sprintf("%v\n", msg))
 	if err != nil {
 		panic(err)
 	}
@@ -30,7 +30,7 @@ func printToStreamWithColor(stream io.Writer, color text.Color, msg interface{})
 
 // OutputHeading prints a header to stdout.
 func (keyfob Keyfob) OutputHeading(msg interface{}) {
-	printToStreamWithColor(keyfob.Out, text.FgHiCyan, msg)
+	printToStreamWithColor(keyfob.Out, text.FgHiCyan, fmt.Sprintf("%v: %v", keyfobHeaderPrefix, msg))
 }
 
 // Output prints a normal message to stdout.

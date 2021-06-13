@@ -15,7 +15,10 @@ func TestRoot(t *testing.T) {
 	command := NewRootCommand()
 	command.SetOut(b)
 	command.SetArgs([]string{})
-	command.Execute()
+	err := command.Execute()
+	if err != nil {
+		t.Fatal(err)
+	}
 
 	out, err := ioutil.ReadAll(b)
 	if err != nil {
