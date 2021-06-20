@@ -33,10 +33,14 @@ jobs:
       run: go test --coverprofile coverage.out -v ./... 2>&1 | go2xunit -output test.xunit
     - name: Generate coverage report.
       run: go tool cover -html=coverage.out -o coverage.html
+    - name: Publish Unit Test Results
+      uses: EnricoMi/publish-unit-test-result-action@v1
+      if: always()
+      with:
+        files: test.xunit
     - name: Save artifacts.
       uses: actions/upload-artifact@v2
+      if: always()
       with:
-        name: Artifacts
-        path: |
-          ./test.xunit
-          ./coverage.html
+        name: Coverage report.
+        path: ./coverage.html
