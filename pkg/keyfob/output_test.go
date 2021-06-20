@@ -5,13 +5,13 @@ import (
 	"io/ioutil"
 	"testing"
 
-	"github.com/stretchr/testify/assert"
 	"github.com/acarl005/stripansi"
+	"github.com/stretchr/testify/assert"
 )
 
 func TestOutputs(t *testing.T) {
 	b := bytes.NewBufferString("")
-	
+
 	kf := New()
 	kf.Out = b
 	kf.Err = b
@@ -26,7 +26,7 @@ func TestOutputs(t *testing.T) {
 			t.Fatal(err)
 		}
 
-		assert.Equal(t, testPhrase + "\n", string(out))
+		assert.Equal(t, testPhrase+"\n", string(out))
 	})
 
 	t.Run("outputs header", func(t *testing.T) {
