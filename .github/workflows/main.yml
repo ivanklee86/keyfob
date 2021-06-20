@@ -41,7 +41,7 @@ jobs:
       with:
         files: test.xunit
     - name: Send coverage to Coveralls.
-      run: goveralls -coverprofile=coverage.out -service=github
+      run: goveralls --repotoken ${COVERALLS_TOKEN}  -coverprofile=coverage.out -service=github
       env:
         COVERALLS_TOKEN: ${{ secrets.COVERALLS_TOKEN }}
     - name: Save artifacts.
