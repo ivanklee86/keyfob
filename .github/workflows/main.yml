@@ -55,6 +55,6 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v2
     - name: Generate format report.
-      run: go fmt -d .
+      run: gofmt -d .
     - name: Run format again (so job will error )
       run: test -z $(gofmt -l .)
