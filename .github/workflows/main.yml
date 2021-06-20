@@ -28,9 +28,11 @@ jobs:
         restore-keys: |
           ${{ runner.os }}-go-
     - name: Install test tools.
-      run: go get github.com/tebeka/go2xunit
+      run: |
+        go get github.com/tebeka/go2xunit
+        go get github.com/mattn/goveralls
     - name: Run tests.
-      run: go test --coverprofile coverage.out -v ./... 2>&1 | go2xunit -output test.xunit
+      run: go test -covermode atomic --coverprofile coverage.out -v ./... 2>&1 | go2xunit -output test.xunit
     - name: Generate coverage report.
       run: go tool cover -html=coverage.out -o coverage.html
     - name: Publish Unit Test Results
@@ -38,6 +40,10 @@ jobs:
       if: always()
       with:
         files: test.xunit
+    - name: Send coverage to Coveralls.
+      run: goveralls -coverprofile=coverage.out -service=github
+      env:
+        COVERALLS_TOKEN: ${{ secrets.COVERALLS_TOKEN }}
     - name: Save artifacts.
       uses: actions/upload-artifact@v2
       if: always()
