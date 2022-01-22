@@ -19,6 +19,9 @@ all: clean fmt lint test build
 #-----------------------------------------------------------------------
 # Build
 #-----------------------------------------------------------------------
+install:
+	go get ./...
+
 build:
 	mkdir ${BUILD_DIR} | true
 	go build ${LDFLAGS} -o ${BUILD_DIR} ./...
