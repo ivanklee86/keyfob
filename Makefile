@@ -37,6 +37,9 @@ lint:
 	golangci-lint run
 
 test:
+	go test -v ./... 2>&1
+
+test-ci:
 	go test --coverprofile ${COVERAGE_RAW} -v ./... 2>&1  | go-junit-report > report.xml
 	go tool cover -html=${COVERAGE_RAW} -o ${COVERAGE_REPORT}
 
