@@ -14,7 +14,7 @@ jobs:
     - name: Install Go
       uses: actions/setup-go@v2
       with:
-        go-version: 1.16.x
+        go-version: 1.17.6
     - name: Checkout code
       uses: actions/checkout@v2
     - uses: actions/cache@v2
@@ -27,18 +27,28 @@ jobs:
         key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
         restore-keys: |
           ${{ runner.os }}-go-
-    - name: Install test tools.
+    - name: Install all dependencies
       run: |
-        go get github.com/tebeka/go2xunit
+        go get ./...
+        go install github.com/jstemmer/go-junit-report
     - name: Run tests.
-      run: go test -covermode atomic --coverprofile coverage.out -v ./... 2>&1 | go2xunit -output test.xunit
+      run: go test -covermode atomic --coverprofile coverage.out -v ./... 2>&1 | go-junit-report > report.xunit
     - name: Generate coverage report.
       run: go tool cover -html=coverage.out -o coverage.html
     - name: Publish Unit Test Results
       uses: EnricoMi/publish-unit-test-result-action@v1
       if: always()
       with:
-        files: test.xunit
+        files: report.xunit
+    - name: notify-tests
+      uses: ivanklee86/xunit-slack-reporter@v1.4.0
+      if: always()
+      env:
+        EXIT_CODE_FROM_REPORT: "False"
+        ONLY_NOTIFY_ON_ISSUES: "True"
+        SLACK_CHANNEL: CKQ7C7KJN
+        SLACK_TOKEN: ${{ secrets.SLACK_TOKEN }}
+        XUNIT_PATH: ./report.xunit
     - name: Generate lcov coverage report.
       uses: jandelgado/gcov2lcov-action@v1.0.5
     - name: Coveralls 

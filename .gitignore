@@ -20,3 +20,4 @@ bin/
 .idea
 tests.xml
 cover.html
+report.xml

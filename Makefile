@@ -19,6 +19,9 @@ all: clean fmt lint test build
 #-----------------------------------------------------------------------
 # Build
 #-----------------------------------------------------------------------
+install:
+	go get ./...
+
 build:
 	mkdir ${BUILD_DIR} | true
 	go build ${LDFLAGS} -o ${BUILD_DIR} ./...
@@ -34,7 +37,7 @@ lint:
 	golangci-lint run
 
 test:
-	go test --coverprofile ${COVERAGE_RAW} -v ./... 2>&1 | go2xunit -output ${TEST_REPORT}
+	go test --coverprofile ${COVERAGE_RAW} -v ./... 2>&1  | go-junit-report > report.xml
 	go tool cover -html=${COVERAGE_RAW} -o ${COVERAGE_REPORT}
 
 #-----------------------------------------------------------------------
